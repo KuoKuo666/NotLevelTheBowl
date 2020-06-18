@@ -1,28 +1,12 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import { StaticInstance } from "./global/StaticInstance"
 
-const {ccclass, property} = cc._decorator;
+const {ccclass, property} = cc._decorator
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class GameManager extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
-    start () {
-
+    onLoad() {
+        StaticInstance.setGameManager(this)
     }
 
-    // update (dt) {}
 }
