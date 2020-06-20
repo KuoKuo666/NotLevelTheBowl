@@ -8,6 +8,10 @@ export default class UIBase extends cc.Component {
     })
     isShowInit: boolean = false
 
+    onLoad() {
+        this.isShowInit ? this.show() : this.hide()
+    }
+
     show() {
         this.node.active = true
     }

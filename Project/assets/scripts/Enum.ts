@@ -22,11 +22,11 @@ export enum MuiscResUrl {
 export enum PrefabUrl {
     ControlPanel = 'prefab/ControlPanel',
     LevelInfo = 'prefab/LevelInfo',
-    LevelSelect = 'prefab/Select',
+    LevelSelect = 'prefab/LevelSelect',
     StartMenu = 'prefab/StartMenu'
 }
 
-/** 预制体类型 */
+/** 预制体类型，对应类 */
 export enum PrefabType {
     ControlPanel,
     LevelInfo,

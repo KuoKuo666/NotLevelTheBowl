@@ -36,6 +36,10 @@ export default class ControlPanel extends UIBase {
     })
     panelMidNode: cc.Node | undefined = undefined
 
+    onLoad() {
+        super.onLoad()
+    }
+
     /** 初始化按钮监听事件，注入管理实例 */
     init(context: UIManager) {
         

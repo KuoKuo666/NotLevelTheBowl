@@ -18,6 +18,10 @@ export default class LevelInfo extends UIBase {
     })
     nowItembLabel: cc.Node | undefined = undefined
 
+    onLoad() {
+        super.onLoad()
+    }
+
     /** 初始化按钮监听事件，注入管理实例 */
     init(context: UIManager) {
         
