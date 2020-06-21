@@ -26,8 +26,8 @@ export enum PrefabUrl {
     StartMenu = 'prefab/StartMenu'
 }
 
-/** 预制体类型，对应类 */
-export enum PrefabType {
+/** 预制体实例后对应 UI 种类 */
+export enum UIType {
     ControlPanel,
     LevelInfo,
     LevelSelect,

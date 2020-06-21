@@ -1,11 +1,12 @@
 import { StaticInstance } from "./global/StaticInstance"
-import { PrefabType, PrefabUrl } from "./Enum"
+import { UIType, PrefabUrl } from "./Enum"
 import UIBase from "./ui/UIBase"
 import ControlPanel from "./ui/ControlPanel"
 import { Util } from "./utils/Util"
 import LevelInfo from "./ui/LevelInfo"
 import LevelSelect from "./ui/LevelSelect"
 import StartMenu from "./ui/StartMenu"
+import { MusicManager } from "./global/MusicManager"
 
 const {ccclass, property} = cc._decorator
 
@@ -13,7 +14,7 @@ const {ccclass, property} = cc._decorator
 export default class UIManager extends cc.Component {
 
     /** ui实例 Map */
-    uiMap: Map<PrefabType, UIBase> = new Map()
+    uiMap: Map<UIType, UIBase> = new Map()
 
     onLoad() {
         StaticInstance.setUIManager(this)
@@ -23,12 +24,27 @@ export default class UIManager extends cc.Component {
         this.initStartMenu()
     }
 
-    onClickStartButton() {
-        console.log('GameStart')
+    gameStart(level: number) {
+        console.log(`[UIManager] gameStart level ${level}`)
+        this.showUI([UIType.ControlPanel, UIType.LevelInfo])
     }
 
-    onClickLevelSelectButton() {
-        console.log('LevelSelect')
+    toLevelSelect() {
+        this.showUI([UIType.LevelSelect])
+    }
+
+    backToStartMenu() {
+        this.showUI([UIType.StartMenu])
+    }
+
+    showUI(showTypes: UIType[]) {
+        this.uiMap.forEach((ui, type) => {
+            if (showTypes.includes(type)) {
+                ui.show()
+            } else {
+                ui.hide()
+            }
+        })
     }
 
     async initControlPanel() {
@@ -38,7 +54,7 @@ export default class UIManager extends cc.Component {
         this.node.addChild(node)
         const comp = node.getComponent(ControlPanel)
         comp.init(this)
-        this.uiMap.set(PrefabType.ControlPanel, comp)
+        this.uiMap.set(UIType.ControlPanel, comp)
     }
 
     async initLevelInfo() {
@@ -48,7 +64,7 @@ export default class UIManager extends cc.Component {
         this.node.addChild(node)
         const comp = node.getComponent(LevelInfo)
         comp.init(this)
-        this.uiMap.set(PrefabType.LevelInfo, comp)
+        this.uiMap.set(UIType.LevelInfo, comp)
     }
 
     async initLevelSelect() {
@@ -58,7 +74,7 @@ export default class UIManager extends cc.Component {
         this.node.addChild(node)
         const comp = node.getComponent(LevelSelect)
         comp.init(this)
-        this.uiMap.set(PrefabType.LevelSelect, comp)
+        this.uiMap.set(UIType.LevelSelect, comp)
     }
 
     async initStartMenu() {
@@ -68,7 +84,7 @@ export default class UIManager extends cc.Component {
         this.node.addChild(node)
         const comp = node.getComponent(StartMenu)
         comp.init(this)
-        this.uiMap.set(PrefabType.StartMenu, comp)
+        this.uiMap.set(UIType.StartMenu, comp)
     }
 
 }

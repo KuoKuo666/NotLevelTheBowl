@@ -30,22 +30,22 @@ export class MusicManager {
         }
     }
 
-    async playBGM() {
+    private async playBGM() {
         const audioClip = await Util.loadMusic(MuiscResUrl.Bgm)
         audioClip && cc.audioEngine.playMusic(audioClip, true)
     }
 
-    async playClickEffect() {
+    private async playClickEffect() {
         const audioClip = await Util.loadMusic(MuiscResUrl.Click)
         audioClip && cc.audioEngine.playEffect(audioClip, false)
     }
 
-    async playLossEffect() {
+    private async playLossEffect() {
         const audioClip = await Util.loadMusic(MuiscResUrl.Loss)
         audioClip && cc.audioEngine.playEffect(audioClip, false)
     }
 
-    async playWinEffect() {
+    private async playWinEffect() {
         const audioClip = await Util.loadMusic(MuiscResUrl.Win)
         audioClip && cc.audioEngine.playEffect(audioClip, false)
     }

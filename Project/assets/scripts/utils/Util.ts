@@ -3,20 +3,24 @@ import { MuiscResUrl, PrefabUrl } from "../Enum"
 /** 工具类 */
 export class Util {
 
-    static clickDownTween(node: cc.Node | undefined, s: number = 0.9) {
+    static clickDownTween(node: cc.Node | undefined, callback?: () => void) {
         if (!node) {
             console.error('[Util] clickDownTween node is undefined')
             return
         }
-        cc.tween(node).to(0.1, { scale: s }).start()
+        cc.tween(node).to(0.1, { scale: 0.9 }).call(() => {
+            callback && callback()
+        }).start()
     }
 
-    static clickUpTween(node: cc.Node | undefined, s: number = 1) {
+    static clickUpTween(node: cc.Node | undefined, callback?: () => void) {
         if (!node) {
             console.error('[Util] clickDownTween node is undefined')
             return
         }
-        cc.tween(node).to(0.1, { scale: s }).start()
+        cc.tween(node).to(0.1, { scale: 1 }).call(() => {
+            callback && callback()
+        }).start()
     }
 
     static loadMusic(url: MuiscResUrl): Promise<cc.AudioClip | undefined> {
@@ -26,7 +30,6 @@ export class Util {
                     console.error('[Util] loadMusic error')
                     resolve(undefined)
                 }
-                console.log('[Util] loadPrefab success')
                 resolve(audioClip)
             })
         })
