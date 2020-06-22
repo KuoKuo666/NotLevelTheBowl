@@ -350,7 +350,7 @@
         0,
         0,
         1,
-        -1,
+        1,
         1,
         1
       ]
@@ -384,7 +384,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "6afaaa98-e407-4793-a7b2-77674f8b93d6"
+      "__uuid__": "817da99e-8042-475a-b30e-e6e3b2d12435"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -491,7 +491,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "6afaaa98-e407-4793-a7b2-77674f8b93d6"
+      "__uuid__": "acc163bd-31c0-42d7-b7dc-c0febe4e1a84"
     },
     "_type": 0,
     "_sizeMode": 1,

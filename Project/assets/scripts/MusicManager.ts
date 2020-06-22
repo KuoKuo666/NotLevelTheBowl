@@ -1,5 +1,5 @@
-import { MusicType, MuiscResUrl } from "../Enum"
-import { Util } from "../utils/Util"
+import { MusicType, MuiscResUrl } from "./Enum"
+import { Util } from "./utils/Util"
 
 /** 音乐播放模块 */
 export class MusicManager {

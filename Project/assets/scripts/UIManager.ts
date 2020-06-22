@@ -1,4 +1,3 @@
-import { StaticInstance } from "./global/StaticInstance"
 import { UIType, PrefabUrl } from "./Enum"
 import UIBase from "./ui/UIBase"
 import ControlPanel from "./ui/ControlPanel"
@@ -6,7 +5,7 @@ import { Util } from "./utils/Util"
 import LevelInfo from "./ui/LevelInfo"
 import LevelSelect from "./ui/LevelSelect"
 import StartMenu from "./ui/StartMenu"
-import { MusicManager } from "./global/MusicManager"
+import { StaticInstance } from "./StaticInstance"
 
 const {ccclass, property} = cc._decorator
 

@@ -2,8 +2,8 @@ import UIBase from "./UIBase"
 import UIManager from "../UIManager"
 import { Util } from "../utils/Util"
 import { DataStorage } from "../utils/DataStorage"
-import { MusicManager } from "../global/MusicManager"
 import { MusicType } from "../Enum"
+import { MusicManager } from "../MusicManager"
 
 const {ccclass, property} = cc._decorator
 
@@ -26,38 +26,58 @@ export default class StartMenu extends UIBase {
         super.onLoad()
     }
 
+    show() {
+        super.show()
+        // 摇摆动画
+        if (!this.startButton) { return }
+        const node = this.startButton.children[0]
+        if (node) {
+            node.stopAllActions()
+            node.angle = 0
+            cc.tween(node)
+                .repeatForever(
+                    cc.tween()
+                        .to(1, { angle: 10 })
+                        .to(1, { angle: 0 })
+                )
+                .start()
+        }
+    }
+
     /** 初始化按钮监听事件，注入管理实例 */
-    init(context: UIManager) {
+    init(uiManager: UIManager) {
+        const { TOUCH_START, TOUCH_END, TOUCH_CANCEL } = cc.Node.EventType
+        // 开始游戏按钮
         if (this.startButton) {
-            this.startButton.on(cc.Node.EventType.TOUCH_START, () => {
+            this.startButton.on(TOUCH_START, () => {
                 MusicManager.getInstance().play(MusicType.Click)
                 Util.clickDownTween(this.startButton)
             }, this)
 
-            this.startButton.on(cc.Node.EventType.TOUCH_END, () => {
+            this.startButton.on(TOUCH_END, () => {
                 Util.clickUpTween(this.startButton, () => {
-                    context.gameStart(DataStorage.unLockLevel)
+                    uiManager.gameStart(DataStorage.unLockLevel)
                 })
             }, this)
 
-            this.startButton.on(cc.Node.EventType.TOUCH_CANCEL, () => {
+            this.startButton.on(TOUCH_CANCEL, () => {
                 Util.clickUpTween(this.startButton)
             }, this)
         }
-
+        // 关卡选择按钮
         if (this.levelSelectButton) {
-            this.levelSelectButton.on(cc.Node.EventType.TOUCH_START, () => {
+            this.levelSelectButton.on(TOUCH_START, () => {
                 MusicManager.getInstance().play(MusicType.Click)
                 Util.clickDownTween(this.levelSelectButton)
             }, this)
 
-            this.levelSelectButton.on(cc.Node.EventType.TOUCH_END, () => {
+            this.levelSelectButton.on(TOUCH_END, () => {
                 Util.clickUpTween(this.levelSelectButton, () => {
-                    context.toLevelSelect()
+                    uiManager.toLevelSelect()
                 })
             }, this)
 
-            this.levelSelectButton.on(cc.Node.EventType.TOUCH_CANCEL, () => {
+            this.levelSelectButton.on(TOUCH_CANCEL, () => {
                 Util.clickUpTween(this.levelSelectButton)
             }, this)
         }

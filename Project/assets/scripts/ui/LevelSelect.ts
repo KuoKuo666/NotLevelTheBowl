@@ -1,10 +1,9 @@
 import UIBase from "./UIBase"
 import UIManager from "../UIManager"
 import { Util } from "../utils/Util"
-import { StaticInstance } from "../global/StaticInstance"
 import { DataStorage } from "../utils/DataStorage"
-import { MusicManager } from "../global/MusicManager"
 import { MusicType } from "../Enum"
+import { MusicManager } from "../MusicManager"
 
 const {ccclass, property} = cc._decorator
 
@@ -27,49 +26,6 @@ export default class LevelSelect extends UIBase {
         super.onLoad()
     }
 
-    /** 初始化按钮监听事件，注入管理实例 */
-    init(context: UIManager) {
-        if (this.backStartButton) {
-            this.backStartButton.on(cc.Node.EventType.TOUCH_START, () => {
-                MusicManager.getInstance().play(MusicType.Click)
-                Util.clickDownTween(this.backStartButton)
-            }, this)
-
-            this.backStartButton.on(cc.Node.EventType.TOUCH_END, () => {
-                Util.clickUpTween(this.backStartButton, () => {
-                    context.backToStartMenu()
-                })
-            }, this)
-
-            this.backStartButton.on(cc.Node.EventType.TOUCH_CANCEL, () => {
-                Util.clickUpTween(this.backStartButton)
-            }, this)
-        }
-
-        if (this.levelsRoot) {
-            this.levelsRoot.children.forEach((node, index) => {
-                const button = node.children[0]
-                button.on(cc.Node.EventType.TOUCH_START, () => {
-                    MusicManager.getInstance().play(MusicType.Click)
-                    Util.clickDownTween(button)
-                }, this)
-
-                button.on(cc.Node.EventType.TOUCH_END, () => {
-                    Util.clickUpTween(button, () => {
-                        const level = index + 1
-                        if (level <= DataStorage.unLockLevel) {
-                            context.gameStart(level)
-                        }
-                    })
-                }, this)
-
-                button.on(cc.Node.EventType.TOUCH_CANCEL, () => {
-                    Util.clickUpTween(button)
-                }, this)
-            })
-        }
-    }
-
     /** 列表显示时要根据已有数据显示解锁关卡 */
     show() {
         super.show()
@@ -79,6 +35,47 @@ export default class LevelSelect extends UIBase {
                 const labelComp = labelNode.getComponent(cc.Label)
                 const level = index + 1
                 labelComp.string = level <= DataStorage.unLockLevel ? '已解锁' : '未解锁'
+            })
+        }
+    }
+
+    /** 初始化按钮监听事件，注入管理实例 */
+    init(uiManager: UIManager) {
+        const { TOUCH_START, TOUCH_END, TOUCH_CANCEL } = cc.Node.EventType
+        // 返回开始菜单按钮
+        if (this.backStartButton) {
+            this.backStartButton.on(TOUCH_START, () => {
+                MusicManager.getInstance().play(MusicType.Click)
+                Util.clickDownTween(this.backStartButton)
+            }, this)
+
+            this.backStartButton.on(TOUCH_END, () => {
+                Util.clickUpTween(this.backStartButton, () => {
+                    uiManager.backToStartMenu()
+                })
+            }, this)
+
+            this.backStartButton.on(TOUCH_CANCEL, () => Util.clickUpTween(this.backStartButton), this)
+        }
+        // 关卡列表
+        if (this.levelsRoot) {
+            this.levelsRoot.children.forEach((node, index) => {
+                const button = node.children[0]
+                button.on(TOUCH_START, () => {
+                    MusicManager.getInstance().play(MusicType.Click)
+                    Util.clickDownTween(button)
+                }, this)
+
+                button.on(TOUCH_END, () => {
+                    Util.clickUpTween(button, () => {
+                        const level = index + 1
+                        if (level <= DataStorage.unLockLevel) {
+                            uiManager.gameStart(level)
+                        }
+                    })
+                }, this)
+
+                button.on(TOUCH_CANCEL, () => Util.clickUpTween(button), this)
             })
         }
     }
