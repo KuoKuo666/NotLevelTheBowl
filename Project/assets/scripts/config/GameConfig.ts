@@ -1,28 +1,27 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+/**
+ * 游戏关卡数据，这里简单配置，数组从第一关开始依次排
+ * 0 代表鸡翅
+ * 1 代表鸡蛋
+ * 2 代表蛋糕
+ * 3 代表饭团
+ * 4 代表薯条
+ * 5 代表汉堡
+ */
+const GameConfig = [
+    // 0 无数据
+    [],
+    // 第一关：2个蛋糕
+    [2, 2],
+    // 第二关：3个鸡翅
+    [0, 0, 0],
+    // 第三关：2个蛋糕 2个鸡蛋
+    [2, 2, 1, 1],
+    // 第四关：4个汉堡
+    [5, 5, 5, 5],
+    // 第五关：4个薯条
+    [4, 4, 4, 4],
+    // 第六关：5个饭团
+    [3, 3, 3, 3, 3]
+]
 
-const {ccclass, property} = cc._decorator;
-
-@ccclass
-export default class NewClass extends cc.Component {
-
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
-    start () {
-
-    }
-
-    // update (dt) {}
-}
+export = GameConfig

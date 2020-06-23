@@ -1,5 +1,5 @@
-import GameManager from '../GameManager'
-import UIManager from '../UIManager'
+import GameManager from './GameManager'
+import UIManager from './UIManager'
 
 /** 静态单例模式进行管理 */
 export class StaticInstance {

@@ -7,24 +7,35 @@ const {ccclass, property} = cc._decorator
 export default class LevelInfo extends UIBase {
 
     @property({
-        type: cc.Node,
+        type: cc.Label,
         displayName: '当前关卡数'
     })
     nowLevelLabel: cc.Label | undefined = undefined
 
     @property({
-        type: cc.Node,
+        type: cc.Label,
         displayName: '当前物品数'
     })
-    nowItembLabel: cc.Node | undefined = undefined
+    nowItemsLabel: cc.Label | undefined = undefined
 
     onLoad() {
         super.onLoad()
     }
 
-    /** 初始化按钮监听事件，注入管理实例 */
+    /** 初始化 */
     init(uiManager: UIManager) {
-        
+    }
+
+    setLevelLabel(level: number) {
+        if (this.nowLevelLabel) {
+            this.nowLevelLabel.string = `第${level}关`
+        }
+    }
+
+    setItemsLabel(nowNum: number, allNum: number) {
+        if (this.nowItemsLabel) {
+            this.nowItemsLabel.string = `${nowNum}/${allNum}`
+        }
     }
 
 }

@@ -9,11 +9,13 @@ export class PhysicsManager {
         cc.director.getPhysicsManager().enabled = false
     }
 
-    static setRigidBoyStatic(body: cc.RigidBody) {
+    static setRigidBoyStatic(node: cc.Node) {
+        const body = node.getComponent(cc.RigidBody)
         body.type = cc.RigidBodyType.Static
     }
 
-    static setRigidBoyDynamic(body: cc.RigidBody) {
+    static setRigidBoyDynamic(node: cc.Node) {
+        const body = node.getComponent(cc.RigidBody)
         body.type = cc.RigidBodyType.Dynamic
     }
 

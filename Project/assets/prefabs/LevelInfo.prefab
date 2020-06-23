@@ -302,6 +302,13 @@
       "__id__": 1
     },
     "_enabled": true,
+    "isShowInit": false,
+    "nowLevelLabel": {
+      "__id__": 3
+    },
+    "nowItemsLabel": {
+      "__id__": 6
+    },
     "_id": ""
   },
   {

@@ -1,4 +1,4 @@
-import { MuiscResUrl, PrefabUrl } from "../Enum"
+import { MuiscResUrl } from "../Enum"
 
 /** 工具类 */
 export class Util {
@@ -31,19 +31,6 @@ export class Util {
                     resolve(undefined)
                 }
                 resolve(audioClip)
-            })
-        })
-    }
-
-    static loadPrefab(url: PrefabUrl): Promise<cc.Prefab | undefined> {
-        return new Promise((resolve, reject) => {
-            cc.loader.loadRes(url, cc.Prefab, (error, prefab) => {
-                if (error) {
-                    console.error('[Util] loadPrefab error')
-                    resolve(undefined)
-                }
-                console.log('[Util] loadPrefab success')
-                resolve(prefab)
             })
         })
     }

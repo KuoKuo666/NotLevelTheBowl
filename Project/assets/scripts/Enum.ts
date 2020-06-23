@@ -18,14 +18,6 @@ export enum MuiscResUrl {
     Win = 'music/musicWin'
 }
 
-/** 预制资源路径 */
-export enum PrefabUrl {
-    ControlPanel = 'prefab/ControlPanel',
-    LevelInfo = 'prefab/LevelInfo',
-    LevelSelect = 'prefab/LevelSelect',
-    StartMenu = 'prefab/StartMenu'
-}
-
 /** 预制体实例后对应 UI 种类 */
 export enum UIType {
     ControlPanel,
