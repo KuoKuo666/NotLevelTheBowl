@@ -39,6 +39,7 @@ export class DataStorage {
     }
 
     static saveData(data: IDataConfig) {
+        console.log(`[DataStorage] saveData ${JSON.stringify(data)}`)
         DataStorage.data = data
         cc.sys.localStorage.setItem('level', JSON.stringify(data))
     }

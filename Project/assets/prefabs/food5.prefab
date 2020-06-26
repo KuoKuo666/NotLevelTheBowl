@@ -61,8 +61,8 @@
         0,
         0,
         1,
-        0.4,
-        0.4,
+        0.3,
+        0.3,
         1
       ]
     },
@@ -147,7 +147,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0.4,
     "_restitution": 0,
     "body": null,
     "_offset": {

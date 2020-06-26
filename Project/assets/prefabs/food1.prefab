@@ -61,8 +61,8 @@
         0,
         0,
         1,
-        0.5,
-        0.5,
+        0.4,
+        0.4,
         1
       ]
     },
@@ -147,7 +147,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0.4,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -220,7 +220,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "ab4b42db-e896-4bf6-9bd8-4946235423b0"
     },
     "fileId": "21zY+HaG5BNo3YK8oh3TiS",
     "sync": false

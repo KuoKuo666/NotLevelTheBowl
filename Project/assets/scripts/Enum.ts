@@ -23,5 +23,7 @@ export enum UIType {
     ControlPanel,
     LevelInfo,
     LevelSelect,
-    StartMenu
+    StartMenu,
+    WinPanel,
+    LossPanel
 }

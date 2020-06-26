@@ -3,6 +3,7 @@ import { MusicType } from "./Enum"
 import { StaticInstance } from "./StaticInstance"
 import { MusicManager } from "./MusicManager"
 import GameConfig = require("./config/GameConfig")
+import { DataStorage, IDataConfig } from "./utils/DataStorage"
 
 const {ccclass, property} = cc._decorator
 
@@ -20,6 +21,18 @@ export default class GameManager extends cc.Component {
         displayName: '食物预制体'
     })
     foodPrefabs: cc.Prefab[] = []
+
+    @property({
+        type: cc.SpriteFrame,
+        displayName: '闭眼的碗'
+    })
+    closeEyeBowl: cc.SpriteFrame | undefined = undefined
+
+    @property({
+        type: cc.SpriteFrame,
+        displayName: '挣眼的碗'
+    })
+    openEyeBowl: cc.SpriteFrame | undefined = undefined
 
     midConfig: IMidConfig = {
         level: 0,
@@ -85,10 +98,50 @@ export default class GameManager extends cc.Component {
         this.isPlaying = true
     }
 
+    gameWin() {
+        MusicManager.getInstance().play(MusicType.Win)
+        StaticInstance.uiManager!.showGameWinUI()
+        if (this.midConfig.level >= DataStorage.maxLevel) {
+            StaticInstance.uiManager!.hideNextLevelButton()
+            return
+        }
+        const data: IDataConfig = {
+            maxLevel: DataStorage.maxLevel,
+            unLockLevel: this.midConfig.level + 1
+        } 
+        DataStorage.saveData(data)
+    }
+
+    gameLoss() {
+        MusicManager.getInstance().play(MusicType.Loss)
+        StaticInstance.uiManager!.showGameLossUI()
+    }
+
+    clearAllFood() {
+        // 从后往前销毁
+        for (let i = this.node.childrenCount - 1; i >= 0; i--) {
+            const node = this.node.children[i]
+            if (node.name === 'bowl') { continue }
+            node.destroy()
+        }
+    }
+
+    onClickNextLevel() {
+        this.midConfig.level += 1
+        this.clearAllFood()
+        StaticInstance.uiManager!.gameStart(this.midConfig.level)
+    }
+
+    onClickPlayAgain() {
+        this.clearAllFood()
+        StaticInstance.uiManager!.gameStart(this.midConfig.level)
+    }
+
     onClickDownFood() {
         if (!this.midConfig.node) { return }
         PhysicsManager.setRigidBoyDynamic(this.midConfig.node)
         PhysicsManager.setRigidBoyLinearVelocity(this.midConfig.node, cc.v2(0, -5))
+        this.midConfig.node = undefined
     }
 
     onRotateFood(angle: number) {
@@ -127,6 +180,19 @@ export default class GameManager extends cc.Component {
         const bowl = this.node.getChildByName('bowl')
         bowl.active = true
         bowl.zIndex = 999
+        // 眨眼动作
+        bowl.stopAllActions()
+        cc.tween(bowl).repeatForever(
+            cc.tween()
+                .delay(2)
+                .call(() => {
+                    this.closeEyeBowl && (bowl.getComponent(cc.Sprite).spriteFrame = this.closeEyeBowl)
+                })
+                .delay(0.3)
+                .call(() => {
+                    this.openEyeBowl && (bowl.getComponent(cc.Sprite).spriteFrame = this.openEyeBowl)
+                })
+        ).start()
     }
 
     hideBowl() {
@@ -137,7 +203,8 @@ export default class GameManager extends cc.Component {
     checkAllBody() {
         if (!this.isPlaying || this.someBodyStatic || !this.allBodyStop ) { return }
         if (!this.canAddFood) {
-            console.log('!canAddFood')
+            this.isPlaying = false
+            this.gameWin()
             return
         }
         this.midConfig.node = this.addFood(this.nowFoodType)
@@ -155,7 +222,8 @@ export default class GameManager extends cc.Component {
             }
         }
         if (hasFall) {
-            console.warn('hasFall')
+            this.isPlaying = false
+            this.gameLoss()
         }
     }
 

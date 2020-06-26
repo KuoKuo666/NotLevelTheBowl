@@ -6,6 +6,8 @@ import LevelSelect from "./ui/LevelSelect"
 import StartMenu from "./ui/StartMenu"
 import { StaticInstance } from "./StaticInstance"
 import GameConfig = require("./config/GameConfig")
+import WinPanel from "./ui/WinPanel"
+import LossPanel from "./ui/LossPanel"
 
 const {ccclass, property} = cc._decorator
 
@@ -16,8 +18,10 @@ export default class UIManager extends cc.Component {
     @property(cc.Prefab) startMenuPrefab: cc.Prefab | undefined = undefined
     @property(cc.Prefab) levelInfoPrefab: cc.Prefab | undefined = undefined
     @property(cc.Prefab) levelSelectPrefab: cc.Prefab | undefined = undefined
+    @property(cc.Prefab) winPanelPrefab: cc.Prefab | undefined = undefined
+    @property(cc.Prefab) lossPanelPrefab: cc.Prefab | undefined = undefined
 
-    uiMap: Map<UIType, UIBase> = new Map()
+    uiMap = new Map<UIType, UIBase>()
 
     onLoad() {
         StaticInstance.setUIManager(this)
@@ -25,12 +29,36 @@ export default class UIManager extends cc.Component {
         this.initLevelInfo()
         this.initLevelSelect()
         this.initStartMenu()
+        this.initWinPanel()
+        this.initLossPanel()
+    }
+
+    start() {
+        // 移除loading
+        const loading = this.node.getChildByName('loading')
+        loading && loading.destroy()
     }
 
     gameStart(level: number) {
         console.log(`[UIManager] gameStart level ${level}`)
         this.showUI([UIType.ControlPanel, UIType.LevelInfo])
         StaticInstance.gameManager!.gameStart(level)
+    }
+
+    showGameWinUI() {
+        this.showUI([UIType.LevelInfo, UIType.WinPanel])
+    }
+
+    showGameLossUI() {
+        this.showUI([UIType.LevelInfo, UIType.LossPanel])
+    }
+
+    onClickNextLevel() {
+        StaticInstance.gameManager!.onClickNextLevel()
+    }
+
+    onClickPlayAgain() {
+        StaticInstance.gameManager!.onClickPlayAgain()
     }
 
     onClickDownFood() {
@@ -54,7 +82,14 @@ export default class UIManager extends cc.Component {
     }
 
     backToStartMenu() {
+        StaticInstance.gameManager!.clearAllFood()
+        StaticInstance.gameManager!.hideBowl()
         this.showUI([UIType.StartMenu])
+    }
+
+    hideNextLevelButton() {
+        const winPanel = this.uiMap.get(UIType.WinPanel) as WinPanel
+        winPanel.hideNextLevelButton()
     }
 
     setLevelInfo(level: number, nowItem: number) {
@@ -79,6 +114,7 @@ export default class UIManager extends cc.Component {
         if (!prefab) { return }
         const node = cc.instantiate(prefab)
         this.node.addChild(node)
+        node.setPosition(0, 0)
         const comp = node.getComponent(ControlPanel)
         comp.init(this)
         this.uiMap.set(UIType.ControlPanel, comp)
@@ -89,6 +125,7 @@ export default class UIManager extends cc.Component {
         if (!prefab) { return }
         const node = cc.instantiate(prefab)
         this.node.addChild(node)
+        node.setPosition(0, 0)
         const comp = node.getComponent(LevelInfo)
         comp.init(this)
         this.uiMap.set(UIType.LevelInfo, comp)
@@ -99,6 +136,7 @@ export default class UIManager extends cc.Component {
         if (!prefab) { return }
         const node = cc.instantiate(prefab)
         this.node.addChild(node)
+        node.setPosition(0, 0)
         const comp = node.getComponent(LevelSelect)
         comp.init(this)
         this.uiMap.set(UIType.LevelSelect, comp)
@@ -109,9 +147,32 @@ export default class UIManager extends cc.Component {
         if (!prefab) { return }
         const node = cc.instantiate(prefab)
         this.node.addChild(node)
+        node.setPosition(0, 0)
         const comp = node.getComponent(StartMenu)
         comp.init(this)
         this.uiMap.set(UIType.StartMenu, comp)
+    }
+
+    initWinPanel() {
+        const prefab = cc.instantiate(this.winPanelPrefab)
+        if (!prefab) { return }
+        const node = cc.instantiate(prefab)
+        this.node.addChild(node)
+        node.setPosition(0, 0)
+        const comp = node.getComponent(WinPanel)
+        comp.init(this)
+        this.uiMap.set(UIType.WinPanel, comp)
+    }
+
+    initLossPanel() {
+        const prefab = cc.instantiate(this.lossPanelPrefab)
+        if (!prefab) { return }
+        const node = cc.instantiate(prefab)
+        this.node.addChild(node)
+        node.setPosition(0, 0)
+        const comp = node.getComponent(LossPanel)
+        comp.init(this)
+        this.uiMap.set(UIType.LossPanel, comp)
     }
 
 }
