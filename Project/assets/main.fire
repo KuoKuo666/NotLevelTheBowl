@@ -177,7 +177,7 @@
       "array": [
         0,
         0,
-        459.250565297501,
+        458.9934640057525,
         0,
         0,
         0,
@@ -490,8 +490,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 2,
+    "groupIndex": 2,
     "_id": "65wPLjSu9NDJWxC+dXQNBT"
   },
   {
@@ -562,7 +562,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0.3,
     "_restitution": 0,
     "body": null,
     "_offset": {

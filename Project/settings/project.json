@@ -47,5 +47,6 @@
       "enable": false
     }
   },
-  "migrate-history": []
+  "migrate-history": [],
+  "start-scene": "current"
 }

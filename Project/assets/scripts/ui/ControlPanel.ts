@@ -1,6 +1,5 @@
 import UIBase from "./UIBase"
 import UIManager from "../UIManager"
-import GameManager from "../GameManager"
 import { MusicManager } from "../MusicManager"
 import { MusicType } from "../Enum"
 import { Util } from "../utils/Util"
@@ -40,6 +39,13 @@ export default class ControlPanel extends UIBase {
     })
     panelMidNode: cc.Node | undefined = undefined
 
+    // 左移与右移
+    leftOpen: boolean = false
+    rightOpen: boolean = false
+
+    // 记录管理实例
+    uiManager: UIManager | undefined = undefined
+
     onLoad() {
         super.onLoad()
     }
@@ -47,17 +53,22 @@ export default class ControlPanel extends UIBase {
     /** 初始化按钮监听事件，注入管理实例 */
     init(uiManager: UIManager) {
         const { TOUCH_START, TOUCH_MOVE, TOUCH_END, TOUCH_CANCEL } = cc.Node.EventType
+        this.uiManager = uiManager
         // 轮盘事件
         if (this.panelBkNode && this.panelMidNode) {
             this.panelBkNode.on(TOUCH_START, (event: cc.Event.EventTouch) => {
                 MusicManager.getInstance().play(MusicType.Click)
                 const pos = this.panelBkNode!.convertToNodeSpaceAR(event.getLocation())
                 this.panelMidNode!.setPosition(this.limitMidNodePos(pos))
+                const angle = cc.misc.radiansToDegrees(Math.atan2(pos.y, pos.x)) - 90
+                uiManager.onRotateFood(angle)
             }, this)
 
             this.panelBkNode.on(TOUCH_MOVE, (event: cc.Event.EventTouch) => {
                 const pos = this.panelBkNode!.convertToNodeSpaceAR(event.getLocation())
                 this.panelMidNode!.setPosition(this.limitMidNodePos(pos))
+                const angle = cc.misc.radiansToDegrees(Math.atan2(pos.y, pos.x)) - 90
+                uiManager.onRotateFood(angle)
             }, this)
 
             this.panelBkNode.on(TOUCH_END, () => this.panelMidNode!.setPosition(0, 0), this)
@@ -68,26 +79,36 @@ export default class ControlPanel extends UIBase {
             this.clickLeftButton.on(TOUCH_START, () => {
                 MusicManager.getInstance().play(MusicType.Click)
                 Util.clickDownTween(this.clickLeftButton)
+                this.leftOpen = true
             }, this)
 
             this.clickLeftButton.on(TOUCH_END, () => {
                 Util.clickUpTween(this.clickLeftButton)
+                this.leftOpen = false
             }, this)
 
-            this.clickLeftButton.on(TOUCH_CANCEL, () => Util.clickUpTween(this.clickLeftButton), this)
+            this.clickLeftButton.on(TOUCH_CANCEL, () => {
+                Util.clickUpTween(this.clickLeftButton)
+                this.leftOpen = false
+            }, this)
         }
         // 右向按钮
         if (this.clickRightButton) {
             this.clickRightButton.on(TOUCH_START, () => {
                 MusicManager.getInstance().play(MusicType.Click)
                 Util.clickDownTween(this.clickRightButton)
+                this.rightOpen = true
             }, this)
 
             this.clickRightButton.on(TOUCH_END, () => {
                 Util.clickUpTween(this.clickRightButton)
+                this.rightOpen = false
             }, this)
 
-            this.clickRightButton.on(TOUCH_CANCEL, () => Util.clickUpTween(this.clickRightButton), this)
+            this.clickRightButton.on(TOUCH_CANCEL, () => {
+                Util.clickUpTween(this.clickRightButton)
+                this.rightOpen = false
+            }, this)
         }
         // 下落按钮
         if (this.clickDownButton) {
@@ -98,6 +119,7 @@ export default class ControlPanel extends UIBase {
 
             this.clickDownButton.on(TOUCH_END, () => {
                 Util.clickUpTween(this.clickDownButton)
+                uiManager.onClickDownFood()
             }, this)
 
             this.clickDownButton.on(TOUCH_CANCEL, () => Util.clickUpTween(this.clickDownButton), this)
@@ -109,6 +131,11 @@ export default class ControlPanel extends UIBase {
         const len = pos.mag()
         const ratio = len > R ? R / len : 1
         return cc.v2(pos.x * ratio, pos.y * ratio)
+    }
+
+    update(dt: number) {
+        this.leftOpen && this.uiManager!.onClickLeftFood(dt)
+        this.rightOpen && this.uiManager!.onClickRightFood(dt)
     }
 
 }

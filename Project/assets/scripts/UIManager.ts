@@ -30,8 +30,23 @@ export default class UIManager extends cc.Component {
     gameStart(level: number) {
         console.log(`[UIManager] gameStart level ${level}`)
         this.showUI([UIType.ControlPanel, UIType.LevelInfo])
-        this.setLevelInfo(level)
         StaticInstance.gameManager!.gameStart(level)
+    }
+
+    onClickDownFood() {
+        StaticInstance.gameManager!.onClickDownFood()
+    }
+
+    onRotateFood(angle: number) {
+        StaticInstance.gameManager!.onRotateFood(angle)
+    }
+
+    onClickLeftFood(dt: number) {
+        StaticInstance.gameManager!.onClickLeftFood(dt)
+    }
+
+    onClickRightFood(dt: number) {
+        StaticInstance.gameManager!.onClickRightFood(dt)
     }
 
     toLevelSelect() {
@@ -42,11 +57,11 @@ export default class UIManager extends cc.Component {
         this.showUI([UIType.StartMenu])
     }
 
-    setLevelInfo(level: number) {
+    setLevelInfo(level: number, nowItem: number) {
         const levelInfo = this.uiMap.get(UIType.LevelInfo) as LevelInfo
         levelInfo.setLevelLabel(level)
         const max = GameConfig[level].length
-        levelInfo.setItemsLabel(1, max)
+        levelInfo.setItemsLabel(nowItem, max)
     }
 
     showUI(showTypes: UIType[]) {

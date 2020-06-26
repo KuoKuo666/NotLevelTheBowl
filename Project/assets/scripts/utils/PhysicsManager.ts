@@ -19,4 +19,9 @@ export class PhysicsManager {
         body.type = cc.RigidBodyType.Dynamic
     }
 
+    static setRigidBoyLinearVelocity(node: cc.Node, v: cc.Vec2) {
+        const body = node.getComponent(cc.RigidBody)
+        body.linearVelocity = v
+    }
+
 }
