@@ -123,7 +123,6 @@ export default class UIManager extends cc.Component {
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LevelInfo)
-        comp.init(this)
         this.uiMap.set(UIType.LevelInfo, comp)
     }
 

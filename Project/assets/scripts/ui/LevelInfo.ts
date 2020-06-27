@@ -22,10 +22,6 @@ export default class LevelInfo extends UIBase {
         super.onLoad()
     }
 
-    /** 初始化 */
-    init(uiManager: UIManager) {
-    }
-
     setLevelLabel(level: number) {
         if (this.nowLevelLabel) {
             this.nowLevelLabel.string = `第${level}关`
