@@ -34,6 +34,16 @@ export default class GameManager extends cc.Component {
     })
     openEyeBowl: cc.SpriteFrame | undefined = undefined
 
+    @property({
+        type: cc.Node
+    })
+    bowl: cc.Node | undefined = undefined
+
+    @property({
+        type: cc.Node
+    })
+    foods: cc.Node | undefined = undefined
+
     midConfig: IMidConfig = {
         level: 0,
         count: 0,
@@ -48,9 +58,8 @@ export default class GameManager extends cc.Component {
     isPlaying: boolean = false
 
     get allBodyStop(): boolean {
-        for (let i = 0; i < this.node.childrenCount; i++) {
-            const node = this.node.children[i]
-            if (node.name === 'bowl') { continue }
+        for (let i = 0; i < this.foods!.childrenCount; i++) {
+            const node = this.foods!.children[i]
             const body = node.getComponent(cc.RigidBody)
             if (!body.linearVelocity.fuzzyEquals(cc.v2(0, 0), 0.1)) {
                 return false
@@ -60,9 +69,8 @@ export default class GameManager extends cc.Component {
     }
 
     get someBodyStatic(): boolean {
-        for (let i = 0; i < this.node.childrenCount; i++) {
-            const node = this.node.children[i]
-            if (node.name === 'bowl') { continue }
+        for (let i = 0; i < this.foods!.childrenCount; i++) {
+            const node = this.foods!.children[i]
             const body = node.getComponent(cc.RigidBody)
             if (body.type === cc.RigidBodyType.Static) {
                 return true
@@ -101,8 +109,13 @@ export default class GameManager extends cc.Component {
     gameWin() {
         MusicManager.getInstance().play(MusicType.Win)
         StaticInstance.uiManager!.showGameWinUI()
+        // 最后一关不显示“下一关”
         if (this.midConfig.level >= DataStorage.maxLevel) {
             StaticInstance.uiManager!.hideNextLevelButton()
+            return
+        }
+        // 玩之前关不存
+        if (this.midConfig.level < DataStorage.unLockLevel) {
             return
         }
         const data: IDataConfig = {
@@ -118,12 +131,7 @@ export default class GameManager extends cc.Component {
     }
 
     clearAllFood() {
-        // 从后往前销毁
-        for (let i = this.node.childrenCount - 1; i >= 0; i--) {
-            const node = this.node.children[i]
-            if (node.name === 'bowl') { continue }
-            node.destroy()
-        }
+        this.foods!.removeAllChildren()
     }
 
     onClickNextLevel() {
@@ -164,7 +172,7 @@ export default class GameManager extends cc.Component {
     addFood(type: number): cc.Node {
         const pos = cc.v2(0, 450)
         const food = cc.instantiate(this.foodPrefabs[type])
-        this.node.addChild(food)
+        this.foods!.addChild(food)
         food.setPosition(pos)
         PhysicsManager.setRigidBoyStatic(food)
         this.midConfig.count++
@@ -177,27 +185,24 @@ export default class GameManager extends cc.Component {
     }
 
     showBowl() {
-        const bowl = this.node.getChildByName('bowl')
-        bowl.active = true
-        bowl.zIndex = 999
+        this.bowl!.active = true
         // 眨眼动作
-        bowl.stopAllActions()
-        cc.tween(bowl).repeatForever(
+        this.bowl!.stopAllActions()
+        cc.tween(this.bowl).repeatForever(
             cc.tween()
                 .delay(2)
                 .call(() => {
-                    this.closeEyeBowl && (bowl.getComponent(cc.Sprite).spriteFrame = this.closeEyeBowl)
+                    this.closeEyeBowl && (this.bowl!.getComponent(cc.Sprite).spriteFrame = this.closeEyeBowl)
                 })
                 .delay(0.3)
                 .call(() => {
-                    this.openEyeBowl && (bowl.getComponent(cc.Sprite).spriteFrame = this.openEyeBowl)
+                    this.openEyeBowl && (this.bowl!.getComponent(cc.Sprite).spriteFrame = this.openEyeBowl)
                 })
         ).start()
     }
 
     hideBowl() {
-        const bowl = this.node.getChildByName('bowl')
-        bowl.active = false
+        this.bowl!.active = false
     }
 
     checkAllBody() {
@@ -212,9 +217,8 @@ export default class GameManager extends cc.Component {
 
     checkFall() {
         let hasFall: boolean = false
-        for (let i = 0; i < this.node.childrenCount; i++) {
-            const node = this.node.children[i]
-            if (node.name === 'bowl') { continue }
+        for (let i = 0; i < this.foods!.childrenCount; i++) {
+            const node = this.foods!.children[i]
             if (node.y < -800) {
                 node.destroy()
                 hasFall = true

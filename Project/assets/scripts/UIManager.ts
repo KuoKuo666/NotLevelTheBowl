@@ -109,10 +109,8 @@ export default class UIManager extends cc.Component {
         })
     }
 
-    initControlPanel() {
-        const prefab = cc.instantiate(this.controlPanelPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initControlPanel() {
+        const node = cc.instantiate(this.controlPanelPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(ControlPanel)
@@ -120,10 +118,8 @@ export default class UIManager extends cc.Component {
         this.uiMap.set(UIType.ControlPanel, comp)
     }
 
-    initLevelInfo() {
-        const prefab = cc.instantiate(this.levelInfoPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initLevelInfo() {
+        const node = cc.instantiate(this.levelInfoPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LevelInfo)
@@ -131,10 +127,8 @@ export default class UIManager extends cc.Component {
         this.uiMap.set(UIType.LevelInfo, comp)
     }
 
-    initLevelSelect() {
-        const prefab = cc.instantiate(this.levelSelectPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initLevelSelect() {
+        const node = cc.instantiate(this.levelSelectPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LevelSelect)
@@ -142,10 +136,8 @@ export default class UIManager extends cc.Component {
         this.uiMap.set(UIType.LevelSelect, comp)
     }
 
-    initStartMenu() {
-        const prefab = cc.instantiate(this.startMenuPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initStartMenu() {
+        const node = cc.instantiate(this.startMenuPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(StartMenu)
@@ -153,10 +145,8 @@ export default class UIManager extends cc.Component {
         this.uiMap.set(UIType.StartMenu, comp)
     }
 
-    initWinPanel() {
-        const prefab = cc.instantiate(this.winPanelPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initWinPanel() {
+        const node = cc.instantiate(this.winPanelPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(WinPanel)
@@ -164,10 +154,8 @@ export default class UIManager extends cc.Component {
         this.uiMap.set(UIType.WinPanel, comp)
     }
 
-    initLossPanel() {
-        const prefab = cc.instantiate(this.lossPanelPrefab)
-        if (!prefab) { return }
-        const node = cc.instantiate(prefab)
+    private initLossPanel() {
+        const node = cc.instantiate(this.lossPanelPrefab!)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LossPanel)
