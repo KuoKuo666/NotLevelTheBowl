@@ -14,12 +14,12 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class UIManager extends cc.Component {
 
-    @property(cc.Prefab) controlPanelPrefab: cc.Prefab | undefined = undefined
-    @property(cc.Prefab) startMenuPrefab: cc.Prefab | undefined = undefined
-    @property(cc.Prefab) levelInfoPrefab: cc.Prefab | undefined = undefined
-    @property(cc.Prefab) levelSelectPrefab: cc.Prefab | undefined = undefined
-    @property(cc.Prefab) winPanelPrefab: cc.Prefab | undefined = undefined
-    @property(cc.Prefab) lossPanelPrefab: cc.Prefab | undefined = undefined
+    @property(cc.Prefab) controlPanelPrefab: cc.Prefab
+    @property(cc.Prefab) startMenuPrefab: cc.Prefab
+    @property(cc.Prefab) levelInfoPrefab: cc.Prefab
+    @property(cc.Prefab) levelSelectPrefab: cc.Prefab
+    @property(cc.Prefab) winPanelPrefab: cc.Prefab
+    @property(cc.Prefab) lossPanelPrefab: cc.Prefab
 
     uiMap = new Map<UIType, UIBase>()
 
@@ -40,9 +40,8 @@ export default class UIManager extends cc.Component {
     }
 
     gameStart(level: number) {
-        console.log(`[UIManager] gameStart level ${level}`)
         this.showUI([UIType.ControlPanel, UIType.LevelInfo])
-        StaticInstance.gameManager!.gameStart(level)
+        StaticInstance.gameManager.gameStart(level)
     }
 
     showGameWinUI() {
@@ -54,27 +53,27 @@ export default class UIManager extends cc.Component {
     }
 
     onClickNextLevel() {
-        StaticInstance.gameManager!.onClickNextLevel()
+        StaticInstance.gameManager.onClickNextLevel()
     }
 
     onClickPlayAgain() {
-        StaticInstance.gameManager!.onClickPlayAgain()
+        StaticInstance.gameManager.onClickPlayAgain()
     }
 
     onClickDownFood() {
-        StaticInstance.gameManager!.onClickDownFood()
+        StaticInstance.gameManager.onClickDownFood()
     }
 
     onRotateFood(angle: number) {
-        StaticInstance.gameManager!.onRotateFood(angle)
+        StaticInstance.gameManager.onRotateFood(angle)
     }
 
     onClickLeftFood(dt: number) {
-        StaticInstance.gameManager!.onClickLeftFood(dt)
+        StaticInstance.gameManager.onClickLeftFood(dt)
     }
 
     onClickRightFood(dt: number) {
-        StaticInstance.gameManager!.onClickRightFood(dt)
+        StaticInstance.gameManager.onClickRightFood(dt)
     }
 
     toLevelSelect() {
@@ -82,8 +81,8 @@ export default class UIManager extends cc.Component {
     }
 
     backToStartMenu() {
-        StaticInstance.gameManager!.clearAllFood()
-        StaticInstance.gameManager!.hideBowl()
+        StaticInstance.gameManager.clearAllFood()
+        StaticInstance.gameManager.hideBowl()
         this.showUI([UIType.StartMenu])
     }
 
@@ -110,7 +109,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initControlPanel() {
-        const node = cc.instantiate(this.controlPanelPrefab!)
+        const node = cc.instantiate(this.controlPanelPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(ControlPanel)
@@ -119,7 +118,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initLevelInfo() {
-        const node = cc.instantiate(this.levelInfoPrefab!)
+        const node = cc.instantiate(this.levelInfoPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LevelInfo)
@@ -127,7 +126,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initLevelSelect() {
-        const node = cc.instantiate(this.levelSelectPrefab!)
+        const node = cc.instantiate(this.levelSelectPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LevelSelect)
@@ -136,7 +135,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initStartMenu() {
-        const node = cc.instantiate(this.startMenuPrefab!)
+        const node = cc.instantiate(this.startMenuPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(StartMenu)
@@ -145,7 +144,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initWinPanel() {
-        const node = cc.instantiate(this.winPanelPrefab!)
+        const node = cc.instantiate(this.winPanelPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(WinPanel)
@@ -154,7 +153,7 @@ export default class UIManager extends cc.Component {
     }
 
     private initLossPanel() {
-        const node = cc.instantiate(this.lossPanelPrefab!)
+        const node = cc.instantiate(this.lossPanelPrefab)
         this.node.addChild(node)
         node.setPosition(0, 0)
         const comp = node.getComponent(LossPanel)
