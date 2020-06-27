@@ -5,8 +5,8 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class LevelInfo extends UIBase {
 
-    @property(cc.Label) nowLevelLabel: cc.Label
-    @property(cc.Label) nowItemsLabel: cc.Label
+    @property(cc.Label) nowLevelLabel: cc.Label = undefined
+    @property(cc.Label) nowItemsLabel: cc.Label = undefined
 
     onLoad() {
         super.onLoad()

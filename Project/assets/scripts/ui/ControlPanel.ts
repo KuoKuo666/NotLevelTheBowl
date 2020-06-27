@@ -9,11 +9,11 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class ControlPanel extends UIBase {
 
-    @property(cc.Node) clickDownButton: cc.Node
-    @property(cc.Node) clickLeftButton: cc.Node
-    @property(cc.Node) clickRightButton: cc.Node
-    @property(cc.Node) panelBkNode: cc.Node
-    @property(cc.Node) panelMidNode: cc.Node
+    @property(cc.Node) clickDownButton: cc.Node = undefined
+    @property(cc.Node) clickLeftButton: cc.Node = undefined
+    @property(cc.Node) clickRightButton: cc.Node = undefined
+    @property(cc.Node) panelBkNode: cc.Node = undefined
+    @property(cc.Node) panelMidNode: cc.Node = undefined
 
     // 左移与右移
     leftOpen: boolean = false

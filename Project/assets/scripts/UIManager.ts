@@ -14,12 +14,12 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class UIManager extends cc.Component {
 
-    @property(cc.Prefab) controlPanelPrefab: cc.Prefab
-    @property(cc.Prefab) startMenuPrefab: cc.Prefab
-    @property(cc.Prefab) levelInfoPrefab: cc.Prefab
-    @property(cc.Prefab) levelSelectPrefab: cc.Prefab
-    @property(cc.Prefab) winPanelPrefab: cc.Prefab
-    @property(cc.Prefab) lossPanelPrefab: cc.Prefab
+    @property(cc.Prefab) controlPanelPrefab: cc.Prefab = undefined
+    @property(cc.Prefab) startMenuPrefab: cc.Prefab = undefined
+    @property(cc.Prefab) levelInfoPrefab: cc.Prefab = undefined
+    @property(cc.Prefab) levelSelectPrefab: cc.Prefab = undefined
+    @property(cc.Prefab) winPanelPrefab: cc.Prefab = undefined
+    @property(cc.Prefab) lossPanelPrefab: cc.Prefab = undefined
 
     uiMap = new Map<UIType, UIBase>()
 

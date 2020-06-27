@@ -10,8 +10,8 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class StartMenu extends UIBase {
 
-    @property(cc.Node) startButton: cc.Node
-    @property(cc.Node) levelSelectButton: cc.Node
+    @property(cc.Node) startButton: cc.Node = undefined
+    @property(cc.Node) levelSelectButton: cc.Node = undefined
 
     onLoad() {
         super.onLoad()

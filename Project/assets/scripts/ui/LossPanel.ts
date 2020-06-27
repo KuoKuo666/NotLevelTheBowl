@@ -9,8 +9,8 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class LossPanel extends UIBase {
 
-    @property(cc.Node) playAgainButton: cc.Node
-    @property(cc.Node) backToMenuButton: cc.Node
+    @property(cc.Node) playAgainButton: cc.Node = undefined
+    @property(cc.Node) backToMenuButton: cc.Node = undefined
 
     onLoad() {
         super.onLoad()

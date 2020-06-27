@@ -10,8 +10,8 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class LevelSelect extends UIBase {
 
-    @property(cc.Node) backStartButton: cc.Node
-    @property(cc.Node) levelsRoot: cc.Node
+    @property(cc.Node) backStartButton: cc.Node = undefined
+    @property(cc.Node) levelsRoot: cc.Node = undefined
 
     onLoad() {
         super.onLoad()

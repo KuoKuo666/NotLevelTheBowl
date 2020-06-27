@@ -26,16 +26,16 @@ export default class GameManager extends cc.Component {
         type: cc.SpriteFrame,
         displayName: '闭眼的碗'
     })
-    closeEyeBowl: cc.SpriteFrame
+    closeEyeBowl: cc.SpriteFrame = undefined
 
     @property({
         type: cc.SpriteFrame,
         displayName: '挣眼的碗'
     })
-    openEyeBowl: cc.SpriteFrame
+    openEyeBowl: cc.SpriteFrame = undefined
 
-    @property(cc.Node) bowl: cc.Node
-    @property(cc.Node) foods: cc.Node
+    @property(cc.Node) bowl: cc.Node = undefined
+    @property(cc.Node) foods: cc.Node = undefined
 
     midConfig: IMidConfig = {
         level: 0,

@@ -9,8 +9,8 @@ const {ccclass, property} = cc._decorator
 @ccclass
 export default class WinPanel extends UIBase {
 
-    @property(cc.Node) nextLevelButton: cc.Node
-    @property(cc.Node) backToMenuButton: cc.Node
+    @property(cc.Node) nextLevelButton: cc.Node = undefined
+    @property(cc.Node) backToMenuButton: cc.Node = undefined
 
     onLoad() {
         super.onLoad()
