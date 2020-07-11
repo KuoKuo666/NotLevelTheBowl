@@ -5,7 +5,8 @@
 
 项目完成：2020年6月27日
 
-视频链接：
+教程状态：连载中
 
-文章链接：
-第一部分：[http://www.kuokuo666.com/2020/06/27/20200627/](http://www.kuokuo666.com/2020/06/27/20200627/)
+视频链接：[https://www.bilibili.com/video/BV1ck4y167mR](https://www.bilibili.com/video/BV1ck4y167mR)
+
+文章链接：[http://www.kuokuo666.com](http://www.kuokuo666.com)
