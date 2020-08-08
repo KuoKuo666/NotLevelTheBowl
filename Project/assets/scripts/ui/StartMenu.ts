@@ -42,7 +42,7 @@ export default class StartMenu extends UIBase {
 
         this.startButton.on(TOUCH_END, () => {
             Util.clickUpTween(this.startButton, () => {
-                uiManager.gameStart(DataStorage.unLockLevel)
+                uiManager.gameStart(DataStorage.getUnLockLevel())
             })
         }, this)
 

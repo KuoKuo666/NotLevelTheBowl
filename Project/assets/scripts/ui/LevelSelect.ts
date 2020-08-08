@@ -20,11 +20,12 @@ export default class LevelSelect extends UIBase {
     /** 列表显示时要根据已有数据显示解锁关卡 */
     show() {
         super.show()
+        const unLockLevel = DataStorage.getUnLockLevel()
         this.levelsRoot.children.forEach((node, index) => {
             const labelNode = node.children[1]
             const labelComp = labelNode.getComponent(cc.Label)
             const level = index + 1
-            labelComp.string = level <= DataStorage.unLockLevel ? '已解锁' : '未解锁'
+            labelComp.string = level <= unLockLevel ? '已解锁' : '未解锁'
         })
     }
 
@@ -57,7 +58,7 @@ export default class LevelSelect extends UIBase {
             button.on(TOUCH_END, () => {
                 Util.clickUpTween(button, () => {
                     const level = index + 1
-                    if (level <= DataStorage.unLockLevel) {
+                    if (level <= DataStorage.getUnLockLevel()) {
                         uiManager.gameStart(level)
                     }
                 })

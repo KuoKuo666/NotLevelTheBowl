@@ -3,7 +3,7 @@ import { MusicType } from "./Enum"
 import { StaticInstance } from "./StaticInstance"
 import { MusicManager } from "./MusicManager"
 import GameConfig = require("./config/GameConfig")
-import { DataStorage, IDataConfig } from "./utils/DataStorage"
+import { DataStorage } from "./utils/DataStorage"
 
 const {ccclass, property} = cc._decorator
 
@@ -102,19 +102,15 @@ export default class GameManager extends cc.Component {
         MusicManager.getInstance().play(MusicType.Win)
         StaticInstance.uiManager.showGameWinUI()
         // 最后一关不显示“下一关”
-        if (this.midConfig.level >= DataStorage.maxLevel) {
+        if (this.midConfig.level >= DataStorage.getMaxLevel()) {
             StaticInstance.uiManager.hideNextLevelButton()
             return
         }
         // 玩之前关不存
-        if (this.midConfig.level < DataStorage.unLockLevel) {
+        if (this.midConfig.level < DataStorage.getUnLockLevel()) {
             return
         }
-        const data: IDataConfig = {
-            maxLevel: DataStorage.maxLevel,
-            unLockLevel: this.midConfig.level + 1
-        } 
-        DataStorage.saveData(data)
+        DataStorage.saveUnLockLevel(this.midConfig.level + 1)
     }
 
     gameLoss() {
