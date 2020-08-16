@@ -5,7 +5,7 @@ import LevelInfo from "./ui/LevelInfo"
 import LevelSelect from "./ui/LevelSelect"
 import StartMenu from "./ui/StartMenu"
 import { StaticInstance } from "./StaticInstance"
-import GameConfig = require("./config/GameConfig")
+import GameConfig from "./config/GameConfig"
 import WinPanel from "./ui/WinPanel"
 import LossPanel from "./ui/LossPanel"
 

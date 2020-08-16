@@ -24,4 +24,4 @@ const GameConfig = [
     [3, 3, 3, 3, 3]
 ]
 
-export = GameConfig
+export default GameConfig

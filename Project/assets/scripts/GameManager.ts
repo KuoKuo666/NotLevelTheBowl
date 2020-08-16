@@ -2,7 +2,7 @@ import { PhysicsManager } from "./utils/PhysicsManager"
 import { MusicType } from "./Enum"
 import { StaticInstance } from "./StaticInstance"
 import { MusicManager } from "./MusicManager"
-import GameConfig = require("./config/GameConfig")
+import GameConfig from "./config/GameConfig"
 import { DataStorage } from "./utils/DataStorage"
 
 const {ccclass, property} = cc._decorator
