@@ -5,7 +5,7 @@
 
 项目完成：2020年6月27日
 
-教程状态：连载中
+教程状态：已完结！（2020年9月16日）
 
 视频链接：[https://www.bilibili.com/video/BV1ck4y167mR](https://www.bilibili.com/video/BV1ck4y167mR)
 
